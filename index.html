@@ -1,0 +1,191 @@
+<html>
+<head>
+  <style>
+    /* 设置表格的边框和间距 */
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    /* 设置表格单元格的内边距 */
+    th, td {
+      padding: 10px;
+    }
+    /* 设置输入框的宽高和边框 */
+    input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+    }
+    /* 设置标题的字体和颜色 */
+    h1 {
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    /* 设置表头的背景色和字体 */
+    th {
+      background-color: #eee;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>课程表</h1>
+  <table id="timetable">
+    <tr>
+      <!-- 添加序号列 -->
+      <th>序号</th>
+      <!-- 添加时间段列 -->
+      <th>时间段</th>
+      <th>时间</th>
+      <th>星期一</th>
+      <th>星期二</th>
+      <th>星期三</th>
+      <th>星期四</th>
+      <th>星期五</th>
+    </tr>
+    <!-- 上午第一节 -->
+    <tr>
+      <!-- 添加序号 -->
+      <td>1</td>
+      <!-- 添加时间段，并合并两行 -->
+      <td rowspan="2">上午</td>
+      <td><input type="text" id="time1" value="8:00-9:00"></td>
+      <td><input type="text" id="mon1"></td>
+      <td><input type="text" id="tue1"></td>
+      <td><input type="text" id="wed1"></td>
+      <td><input type="text" id="thu1"></td>
+      <td><input type="text" id="fri1"></td>
+    </tr>
+    <!-- 上午第二节 -->
+    <tr>
+      <!-- 添加序号 -->
+      <td>2</td>
+      <td><input type="text" id="time2" value="9:00-10:00"></td>
+      <td><input type="text" id="mon2"></td>
+      <td><input type="text" id="tue2"></td>
+      <td><input type="text" id="wed2"></td>
+      <td><input type="text" id="thu2"></td>
+      <td><input type="text" id="fri2"></td>
+    </tr>
+
+    <!-- 空行 -->
+    <tr></tr>
+
+    <!-- 下午第一节 -->
+    <tr>
+      <!-- 添加序号 -->
+      <td>3</td>
+      <!-- 添加时间段，并合并两行 -->
+      <td rowspan="2">下午</td>
+      <td><input type="text" id="time3" value="14:00-15:00"></td>
+      <td><input type="text" id="mon3"></td>
+      <td><input type="text" id="tue3"></td>
+      <td><input type="text" id="wed3"></td>
+      <td><input type="text" id="thu3"></td>
+      <td><input type="text" id="fri3"></td>
+    </tr>
+
+    <!-- 下午第二节 -->
+    <tr>
+     <!-- 添加序号 -->
+     <td>4</td> 
+     <td><input type="text" id="time4" value="15:00-16:00"></td>
+     <td><input type="text" id="mon4"></td>
+     <td><input type="text" id="tue4"></td>
+     <td><input type="text" id="wed4"></td>
+     <td><input type="text" id="thu4"></td>
+     <td><input type="text" id="fri4"></td>
+
+    </tr>
+
+    <!-- 空行 -->
+    <tr></tr>
+
+    <!-- 晚上第一节 -->
+    <tr>
+
+     <!-- 添加序号 -->
+     <td>5</td> 
+     <!-- 添加时间段，并合并一行 -->
+     <td rowspan= "1">晚上</td>
+      <td><input type="text" id="time5" value="19:00-20:00"></td>
+      <td><input type="text" id="mon5"></td>
+      <td><input type="text" id="tue5"></td>
+      <td><input type="text" id="wed5"></td>
+      <td><input type="text" id="thu5"></td>
+      <td><input type="text" id="fri5"></td>
+    </tr>
+
+  </table>
+
+  <!-- add some JavaScript to save and load the input values -->
+  <script>
+
+    // get all the input elements in the table
+    let inputs = document.querySelectorAll("#timetable input");
+
+    // loop through each input element
+    for (let input of inputs) {
+
+      // get the id of the input element
+      let id = input.id;
+
+      // load the value from the local storage if it exists
+      let value = localStorage.getItem(id);
+      if (value) {
+        input.value = value;
+      }
+
+      // add an event listener to save the value when the input changes
+      input.addEventListener("change", function() {
+        localStorage.setItem(id, input.value);
+      });
+    }
+
+    // create a fluent object to manipulate the table
+    let fluent = {
+
+      // a method to change the background color of a cell
+      color: function(row, col, color) {
+        // get the cell element by its row and column index
+        let cell = document.querySelector(`#timetable tr:nth-child(${row}) td:nth-child(${col})`);
+        // set the background color style
+        cell.style.backgroundColor = color;
+        // return this object for chaining
+        return this;
+      },
+
+      // a method to change the font size of a cell
+      size: function(row, col, size) {
+        // get the cell element by its row and column index
+        let cell = document.querySelector(`#timetable tr:nth-child(${row}) td:nth-child(${col})`);
+        // set the font size style
+        cell.style.fontSize = size;
+        // return this object for chaining
+        return this;
+      },
+
+      // a method to change the text alignment of a cell
+      align: function(row, col, align) {
+        // get the cell element by its row and column index
+        let cell = document.querySelector(`#timetable tr:nth-child(${row}) td:nth-child(${col})`);
+        // set the text align style
+        cell.style.textAlign = align;
+        // return this object for chaining
+        return this;
+      }
+    };
+
+    // use the fluent object to change some styles of the table
+    fluent.color(1, 1, "pink") // change the background color of the first cell to pink
+          .size(1, 1, "20px")   // change the font size of the first cell to 20px
+          .align(1, 1, "center")// change the text alignment of the first cell to center
+          .color(2, 2, "yellow")// change the background color of the second cell in the second row to yellow
+          .size(2, 2, "18px")   // change the font size of that cell to 18px
+          .align(2, 2, "left"); // change the text alignment of that cell to left
+
+  </script>
+
+</body>
+</html>
