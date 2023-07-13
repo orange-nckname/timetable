@@ -1,9 +1,21 @@
 <html>
 <head>
-  <meta name="screen-orientation" content="landscape">
-  <meta name="x5-orientation" content="landscape">
+    
 
   <style>
+    @media screen and (orientation: portrait) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+}
+
     /* 设置表格的边框和间距 */
     table, th, td {
       border: 1px solid black;
@@ -33,6 +45,7 @@
   </style>
 </head>
 <body>
+    
   <h1>课程表</h1>
   <table id="timetable">
     <tr>
